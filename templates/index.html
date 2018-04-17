@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-INDEX
+<ul>
+{% for rank in ranks %}
+  <li>{{ rank }}</li>
+{% endfor %}
+</ul>
 {% endblock %}

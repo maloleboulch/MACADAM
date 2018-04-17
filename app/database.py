@@ -1,0 +1,13 @@
+from flask import Flask, g
+import sqlite3
+
+
+def get_db():
+    if not hasattr(g, 'sqlite_db'):
+        g.sqlite_db = sqlite3.connect('DatabaseTSV/PGM.db')
+    return g.sqlite_db
+
+
+def list_taxonomy_ranks():
+    return get_db().execute('SELECT DISTINCT taxonomicRank FROM taxonomy ORDER BY parentTaxID DESC').fetchall()
+
