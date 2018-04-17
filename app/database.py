@@ -9,5 +9,6 @@ def get_db():
 
 
 def list_taxonomy_ranks():
-    return get_db().execute('SELECT DISTINCT taxonomicRank FROM taxonomy ORDER BY parentTaxID DESC').fetchall()
+    results = get_db().execute('SELECT DISTINCT taxonomicRank FROM taxonomy ORDER BY parentTaxID DESC').fetchall()
+    return map(lambda t: t[0], results)
 

@@ -1,9 +1,64 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<ul>
-{% for rank in ranks %}
-  <li>{{ rank }}</li>
-{% endfor %}
-</ul>
+
+<div class="container-fluid">
+    <form>
+        <div class="form-group row" >
+            <label for="func" class="col-md-1 col-form-label">Function of interest</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="func">
+            </div>
+        </div>
+
+        <div class="form-group row" >
+            <label for="cpd" class="col-md-1 col-form-label">Coumpound of interest</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="cpd">
+            </div>
+        </div>
+
+        <div class="form-group row" >
+            <label for="rxn" class="col-md-1 col-form-label">Reaction of interest</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="rxn">
+            </div>
+        </div>
+
+        <div class="form-group row" >
+            <label for="enz" class="col-md-1 col-form-label">Enzyme of interest</label>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="enz">
+            </div>
+        </div>
+
+        <div class="form-group row" >
+            <label for="taxonomyRank" class="col-md-1 col-form-label">Taxonomy Rank</label>
+            <div class="col-md-3">
+                <select class="form-control" id="taxonomyRank">
+                     <option></option>
+                    {% for rank in taxonomyRanks %}
+                    <option>{{ rank }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row" >
+            <label for="minScore" class="col-md-1 col-form-label">Min score</label>
+            <div class="col-md-3">
+                <input type="number" class="form-control" id="minScore" step="0.01">
+            </div>
+        </div>
+
+        <div class="form-group row" >
+            <label for="maxScore" class="col-md-1 col-form-label">Max score</label>
+            <div class="col-md-3">
+                <input type="number" class="form-control" id="maxScore" step="0.01">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+</div>
 {% endblock %}

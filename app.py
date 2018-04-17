@@ -6,8 +6,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    ranks = list_taxonomy_ranks()
-    return render_template('index.html', ranks=ranks)
+    taxonomyRanks = list_taxonomy_ranks()
+    return render_template('index.html', taxonomyRanks=taxonomyRanks)
 
 
 @app.teardown_appcontext
