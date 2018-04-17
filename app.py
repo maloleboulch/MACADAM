@@ -1,12 +1,12 @@
 from flask import Flask, g, render_template
-from application.database import list_taxonomy_ranks
+from application import database
 
 app = Flask(__name__)
 
 
 @app.route('/')
 def index():
-    taxonomy_ranks = list_taxonomy_ranks()
+    taxonomy_ranks = database.list_taxonomy_ranks()
     return render_template('index.html', taxonomy_ranks=taxonomy_ranks)
 
 
