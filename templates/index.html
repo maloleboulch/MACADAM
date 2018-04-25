@@ -7,38 +7,41 @@
         <div class="form-group row" >
             <label for="func" class="col-md-1 col-form-label">Function of interest</label>
             <div class="col-md-3">
-                <input type="text" class="form-control" id="func">
+                <select class="form-control" id="func" multiple="multiple">
+                </select>
             </div>
         </div>
 
         <div class="form-group row" >
             <label for="cpd" class="col-md-1 col-form-label">Coumpound of interest</label>
             <div class="col-md-3">
-                <input type="text" class="form-control" id="cpd">
+                <select class="form-control" id="cpd" multiple="multiple">
+                </select>
             </div>
         </div>
 
         <div class="form-group row" >
             <label for="rxn" class="col-md-1 col-form-label">Reaction of interest</label>
             <div class="col-md-3">
-                <input type="text" class="form-control" id="rxn">
+                <select class="form-control" id="rxn" multiple="multiple">
+                </select>
             </div>
         </div>
 
         <div class="form-group row" >
             <label for="enz" class="col-md-1 col-form-label">Enzyme of interest</label>
             <div class="col-md-3">
-                <input type="text" class="form-control" id="enz">
+                <select class="form-control" id="enz" multiple="multiple">
+                </select>
             </div>
         </div>
 
         <div class="form-group row" >
             <label for="taxonomyRank" class="col-md-1 col-form-label">Taxonomy Rank</label>
             <div class="col-md-3">
-                <select class="form-control" id="taxonomyRank">
-                     <option></option>
+                <select class="form-control" id="taxonomyRank" multiple="multiple">
                     {% for rank in taxonomy_ranks %}
-                    <option>{{ rank }}</option>
+                    <option value="{{ rank }}">{{ rank }}</option>
                     {% endfor %}
                 </select>
             </div>

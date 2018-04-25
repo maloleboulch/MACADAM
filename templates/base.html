@@ -1,9 +1,10 @@
 <!doctype html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Macadam{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='select2/select2.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
@@ -19,4 +20,9 @@
         {% endfor %}
         {% block content %}{% endblock %}
     </section>
+    <script src="{{ url_for('static', filename='jquery/jquery-3.2.1.slim.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='popper/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='select2/select2.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='application.js') }}"></script>
 </body>
