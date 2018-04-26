@@ -12,17 +12,15 @@ def index():
 
 @app.route('/search')
 def search():
-    func = request.args.get("func")
-    cpd = request.args.get("cpd")
-    rxn = request.args.get("rxn")
-    enz = request.args.get("enz")
-    taxonomy_rank = request.args.get("taxonomyRank")
+    funcs = request.args.getlist("func")
+    cpds = request.args.getlist("cpd")
+    rxns = request.args.getlist("rxn")
+    enzs = request.args.getlist("enz")
+    taxonomy_ranks = request.args.getlist("taxonomyRank")
     min_score = request.args.get("minScore")
     max_score = request.args.get("maxScore")
 
-    print(str(request.args.to_dict()))
-
-    return render_template('search.html', func=func, cpd=cpd, rxn=rxn, enz=enz, taxonomy_rank=taxonomy_rank,
+    return render_template('search.html', funcs=funcs, cpds=cpds, rxns=rxns, enzs=enzs, taxonomy_ranks=taxonomy_ranks,
                            min_score=min_score, max_score=max_score)
 
 
