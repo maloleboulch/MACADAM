@@ -26,10 +26,11 @@ def search():
     enzs_pathways = database.find_enzs_pathways(enzs)
 
     all_funcs = funcs + cpds_pathways + rxns_pathways + enzs_pathways
+    taxonomies = database.find_taxonomies(taxs, taxonomy_ranks)
 
     return render_template('search.html', taxs=taxs, funcs=funcs, cpds=cpds, rxns=rxns, enzs=enzs,
                            taxonomy_ranks=taxonomy_ranks, min_score=min_score, max_score=max_score,
-                           all_funcs=all_funcs)
+                           all_funcs=all_funcs, taxonomies=taxonomies)
 
 
 @app.teardown_appcontext

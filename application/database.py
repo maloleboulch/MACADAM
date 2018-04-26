@@ -1,5 +1,6 @@
 from typing import Iterator
 from flask import g
+from application.model import Taxonomy
 import sqlite3
 
 
@@ -51,3 +52,23 @@ def find_enzs_pathways(enzs) -> Iterator[str]:
         pathways.extend(results)
     return [r[0] for r in pathways]
 
+
+def find_taxonomies(names, ranks) -> Iterator[Taxonomy]:
+    if not names:
+        return []
+
+    name_query = "(name LIKE ?"
+    for i in range(len(names) - 1):
+        name_query += " OR name LIKE ?"
+    name_query += ")"
+
+    rank_query = ''
+    if ranks:
+        rank_query = " AND (taxonomicRank=?"
+        for i in range(len(ranks) - 1):
+            rank_query += " OR taxonomicRank=?"
+        rank_query += ")"
+
+    query = 'SELECT * FROM taxonomy WHERE ' + name_query + rank_query + ';'
+    results = get_db().execute(query, names + ranks).fetchall()
+    return [Taxonomy(r[0], r[1], r[2], r[3], r[4], r[5]) for r in results]

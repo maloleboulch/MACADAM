@@ -4,18 +4,30 @@
 
 <div class="container">
 
-{{ taxs }}
-{{ funcs }}
-{{ cpds }}
-{{ rxns }}
-{{ enzs }}
-{{ taxonomy_ranks }}
-{{ min_score }}
-{{ max_score }}
+    {{ taxs }}
+    {{ funcs }}
+    {{ cpds }}
+    {{ rxns }}
+    {{ enzs }}
+    {{ taxonomy_ranks }}
+    {{ min_score }}
+    {{ max_score }}
 
-<div>
-    {{ all_funcs }}
-</div>
-
+    <div>
+        <h3>Funcs</h3>
+        <ul>
+            {% for func in all_funcs %}
+                <li>{{ func }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div>
+        <h3>Taxonomies</h3>
+        <ul>
+            {% for taxonomy in taxonomies %}
+                <li>{{ taxonomy }}</li>
+            {% endfor %}
+        </ul>
+    </div>
 </div>
 {% endblock %}
