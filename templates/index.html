@@ -5,12 +5,12 @@
 <div class="container">
 
     <div class="card">
-        <form class="card-body">
-            <h5 class="card-title">Recherche</h5>
+        <form class="card-body" action="/search" method="get">
+            <h5 class="card-title">Search</h5>
             <div class="form-group row" >
                 <label for="func" class="col-md-2 col-form-label">Function of interest</label>
                 <div class="col-md-5">
-                    <select class="form-control" id="func" multiple="multiple">
+                    <select class="form-control" id="func" name="func" multiple="multiple">
                     </select>
                 </div>
             </div>
@@ -18,7 +18,7 @@
             <div class="form-group row" >
                 <label for="cpd" class="col-md-2 col-form-label">Coumpound of interest</label>
                 <div class="col-md-5">
-                    <select class="form-control" id="cpd" multiple="multiple">
+                    <select class="form-control" id="cpd" name="cpd" multiple="multiple">
                     </select>
                 </div>
             </div>
@@ -26,7 +26,7 @@
             <div class="form-group row" >
                 <label for="rxn" class="col-md-2 col-form-label">Reaction of interest</label>
                 <div class="col-md-5">
-                    <select class="form-control" id="rxn" multiple="multiple">
+                    <select class="form-control" id="rxn" name="rxn" multiple="multiple">
                     </select>
                 </div>
             </div>
@@ -34,7 +34,7 @@
             <div class="form-group row" >
                 <label for="enz" class="col-md-2 col-form-label">Enzyme of interest</label>
                 <div class="col-md-5">
-                    <select class="form-control" id="enz" multiple="multiple">
+                    <select class="form-control" id="enz" name="enz" multiple="multiple">
                     </select>
                 </div>
             </div>
@@ -42,7 +42,7 @@
             <div class="form-group row" >
                 <label for="taxonomyRank" class="col-md-2 col-form-label">Taxonomy Rank</label>
                 <div class="col-md-5">
-                    <select class="form-control" id="taxonomyRank" multiple="multiple">
+                    <select class="form-control" id="taxonomyRank" name="taxonomyRank" multiple="multiple">
                         {% for rank in taxonomy_ranks %}
                         <option value="{{ rank }}">{{ rank }}</option>
                         {% endfor %}
@@ -53,14 +53,14 @@
             <div class="form-group row" >
                 <label for="minScore" class="col-md-2 col-form-label">Min score</label>
                 <div class="col-md-5">
-                    <input type="number" class="form-control" id="minScore" step="0.01">
+                    <input type="number" class="form-control" id="minScore" name="minScore" step="0.01">
                 </div>
             </div>
 
             <div class="form-group row" >
                 <label for="maxScore" class="col-md-2 col-form-label">Max score</label>
                 <div class="col-md-5">
-                    <input type="number" class="form-control" id="maxScore" step="0.01">
+                    <input type="number" class="form-control" id="maxScore" name="maxScore" step="0.01">
                 </div>
             </div>
 
