@@ -12,6 +12,7 @@ def index():
 
 @app.route('/search')
 def search():
+    taxs = request.args.getlist("taxs")
     funcs = request.args.getlist("func")
     cpds = request.args.getlist("cpd")
     rxns = request.args.getlist("rxn")
@@ -20,8 +21,15 @@ def search():
     min_score = request.args.get("minScore")
     max_score = request.args.get("maxScore")
 
-    return render_template('search.html', funcs=funcs, cpds=cpds, rxns=rxns, enzs=enzs, taxonomy_ranks=taxonomy_ranks,
-                           min_score=min_score, max_score=max_score)
+    cpds_pathways = database.find_cpds_pathways(cpds)
+    rxns_pathways = database.find_rxns_pathways(rxns)
+    enzs_pathways = database.find_enzs_pathways(enzs)
+
+    all_funcs = funcs + cpds_pathways + rxns_pathways + enzs_pathways
+
+    return render_template('search.html', taxs=taxs, funcs=funcs, cpds=cpds, rxns=rxns, enzs=enzs,
+                           taxonomy_ranks=taxonomy_ranks, min_score=min_score, max_score=max_score,
+                           all_funcs=all_funcs)
 
 
 @app.teardown_appcontext
