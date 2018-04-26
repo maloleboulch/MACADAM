@@ -12,7 +12,7 @@ def index():
 
 @app.route('/search')
 def search():
-    taxs = request.args.getlist("taxs")
+    taxs = request.args.getlist("tax")
     funcs = request.args.getlist("func")
     cpds = request.args.getlist("cpd")
     rxns = request.args.getlist("rxn")
