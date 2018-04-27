@@ -1,4 +1,4 @@
-from typing import Iterator
+from typing import List
 from flask import g
 from application.model import Taxonomy
 import sqlite3
@@ -10,12 +10,12 @@ def get_db():
     return g.sqlite_db
 
 
-def list_taxonomy_ranks() -> Iterator[str]:
+def list_taxonomy_ranks() -> List[str]:
     results = get_db().execute('SELECT DISTINCT taxonomicRank FROM taxonomy ORDER BY parentTaxID DESC').fetchall()
     return [r[0] for r in results]
 
 
-def find_cpds_pathways(cpds) -> Iterator[str]:
+def find_cpds_pathways(cpds) -> List[str]:
     pathways = []
     for cpd in cpds:
         results = get_db().execute('SELECT DISTINCT(pathwayName) FROM hierarchy '
@@ -28,7 +28,7 @@ def find_cpds_pathways(cpds) -> Iterator[str]:
     return [r[0] for r in pathways]
 
 
-def find_rxns_pathways(rxns) -> Iterator[str]:
+def find_rxns_pathways(rxns) -> List[str]:
     pathways = []
     for rxn in rxns:
         results = get_db().execute('SELECT DISTINCT(pathwayName) FROM hierarchy '
@@ -40,7 +40,7 @@ def find_rxns_pathways(rxns) -> Iterator[str]:
     return [r[0] for r in pathways]
 
 
-def find_enzs_pathways(enzs) -> Iterator[str]:
+def find_enzs_pathways(enzs) -> List[str]:
     pathways = []
     for ezn in enzs:
         results = get_db().execute('SELECT DISTINCT(pathwayName) FROM hierarchy '
@@ -53,22 +53,62 @@ def find_enzs_pathways(enzs) -> Iterator[str]:
     return [r[0] for r in pathways]
 
 
-def find_taxonomies(names, ranks) -> Iterator[Taxonomy]:
+def find_taxonomies(names, ranks) -> List[Taxonomy]:
     if not names:
         return []
 
-    name_query = "(name LIKE ?"
+    name_criteria = "(name LIKE ?"
     for i in range(len(names) - 1):
-        name_query += " OR name LIKE ?"
-    name_query += ")"
+        name_criteria += " OR name LIKE ?"
+    name_criteria += ")"
 
-    rank_query = ''
+    rank_criteria = ''
     if ranks:
-        rank_query = " AND (taxonomicRank=?"
+        rank_criteria = " AND (taxonomicRank=?"
         for i in range(len(ranks) - 1):
-            rank_query += " OR taxonomicRank=?"
-        rank_query += ")"
+            rank_criteria += " OR taxonomicRank=?"
+        rank_criteria += ")"
 
-    query = 'SELECT * FROM taxonomy WHERE ' + name_query + rank_query + ';'
+    query = "SELECT * FROM taxonomy WHERE typeOfName='scientific name' AND " + name_criteria + rank_criteria + ';'
     results = get_db().execute(query, names + ranks).fetchall()
     return [Taxonomy(r[0], r[1], r[2], r[3], r[4], r[5]) for r in results]
+
+
+def find_pathways_for_taxonomy(lineage_rank, min_score, max_score, funcs):
+    if not funcs:
+        return [], [], []
+
+    options_criteria = "(hierarchy.pathwayName LIKE ?"
+    for i in range(len(funcs) - 1):
+        options_criteria += " OR hierarchy.pathwayName LIKE ?"
+    options_criteria += ")"
+
+    faprotax_criteria = "(pathwayName LIKE ?"
+    for i in range(len(funcs) - 1):
+        faprotax_criteria += " OR pathwayName LIKE ?"
+    faprotax_criteria += ")"
+
+    pathways_query = "TODO"
+    faprotaxs_query = "TODO"
+
+    match_point = []
+    pathways = []
+    faprotaxs = []
+    stop = False
+
+    while not stop:
+        if lineage_rank.endswith("NaN."):
+            lineage_rank = lineage_rank[:-4]
+        elif lineage_rank == '2':
+            print("Function doesn't exist or your score is too strict! Skip to next taxonomy")
+            stop = True
+        else:
+            pathways = get_db().execute(pathways_query, funcs).fetchall()
+            faprotaxs = get_db().execute(faprotaxs_query, funcs).fetchall()
+            if pathways or faprotaxs:
+                stop = True
+            else:
+                lineage_rank = ".".join(lineage_rank.split(".")[0:-1])
+                lineage_rank = ".".join(lineage_rank.split(".")[0:-1])+"."
+
+    return pathways, faprotaxs, match_point

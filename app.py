@@ -1,5 +1,5 @@
 from flask import Flask, g, render_template, request
-from application import database
+from application import database, utils
 
 app = Flask(__name__)
 
@@ -27,6 +27,13 @@ def search():
 
     all_funcs = funcs + cpds_pathways + rxns_pathways + enzs_pathways
     taxonomies = database.find_taxonomies(taxs, taxonomy_ranks)
+
+    lineages = set([taxonomy.taxonomy for taxonomy in taxonomies])
+    lineages_by_taxonomy_id = utils.lineages_by_taxonomy_id(taxonomies)
+
+    for lineage in lineages:
+        pathways = database.find_pathways_for_taxonomy(lineage, min_score, max_score, all_funcs)
+        print(pathways)
 
     return render_template('search.html', taxs=taxs, funcs=funcs, cpds=cpds, rxns=rxns, enzs=enzs,
                            taxonomy_ranks=taxonomy_ranks, min_score=min_score, max_score=max_score,
