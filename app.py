@@ -31,13 +31,13 @@ def search():
     lineages = set([taxonomy.taxonomy for taxonomy in taxonomies])
     lineages_by_taxonomy_id = utils.lineages_by_taxonomy_id(taxonomies)
 
+    pathways = []
     for lineage in lineages:
-        pathways = database.find_pathways_for_taxonomy(lineage, min_score, max_score, all_funcs)
-        print(pathways)
+        pathways.extend(database.find_pathways_for_taxonomy(lineage, min_score, max_score, all_funcs))
 
     return render_template('search.html', taxs=taxs, funcs=funcs, cpds=cpds, rxns=rxns, enzs=enzs,
                            taxonomy_ranks=taxonomy_ranks, min_score=min_score, max_score=max_score,
-                           all_funcs=all_funcs, taxonomies=taxonomies)
+                           all_funcs=all_funcs, lineages=lineages, taxonomies=taxonomies, pathways=pathways)
 
 
 @app.teardown_appcontext

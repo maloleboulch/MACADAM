@@ -88,8 +88,18 @@ def find_pathways_for_taxonomy(lineage_rank, min_score, max_score, funcs):
         faprotax_criteria += " OR pathwayName LIKE ?"
     faprotax_criteria += ")"
 
-    pathways_query = "TODO"
-    faprotaxs_query = "TODO"
+    pathways_query = 'SELECT pathway.taxonomy, pathway.ID, pathway.strainName, pathway.numberOfPGDBInSpecies, pathway.numberOfPathway, pathway.pathwayScore, pathway.pathwayFrequencyScore, pathway.reasonToKeep, hierarchy.pathwayName FROM pathway '
+    pathways_query += 'INNER JOIN hierarchy ON(pathway.pathwayFrameID = hierarchy.pathwayFrameID) '
+    pathways_query += 'WHERE pathwayScore BETWEEN ? AND ?'
+    pathways_query += 'AND taxonomy LIKE ? '
+    pathways_query += 'AND ' + options_criteria + ';'
+
+    faprotaxs_query = 'SELECT * FROM faprotax '
+    faprotaxs_query += 'WHERE taxonomy LIKE ? '
+    faprotaxs_query += 'AND ' + faprotax_criteria + ';'
+
+    print(pathways_query)
+    print(faprotaxs_query)
 
     match_point = []
     pathways = []
@@ -103,8 +113,8 @@ def find_pathways_for_taxonomy(lineage_rank, min_score, max_score, funcs):
             print("Function doesn't exist or your score is too strict! Skip to next taxonomy")
             stop = True
         else:
-            pathways = get_db().execute(pathways_query, funcs).fetchall()
-            faprotaxs = get_db().execute(faprotaxs_query, funcs).fetchall()
+            pathways = get_db().execute(pathways_query, [min_score, max_score, lineage_rank, funcs]).fetchall()
+            faprotaxs = get_db().execute(faprotaxs_query, [lineage_rank, funcs]).fetchall()
             if pathways or faprotaxs:
                 stop = True
             else:

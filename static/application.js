@@ -5,4 +5,9 @@ $(document).ready(function () {
     $('#rxn').select2({tags: true, theme: 'classic'});
     $('#enz').select2({tags: true, theme: 'classic'});
     $('#taxonomyRank').select2({theme: 'classic'});
+
+    $('#resul-tab a').on('click', function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    });
 });
