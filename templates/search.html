@@ -18,7 +18,9 @@
         <a class="nav-item nav-link active" id="nav-funcs-tab" data-toggle="tab" href="#nav-funcs" role="tab" aria-controls="nav-funcs" aria-selected="true">Funcs ({{ all_funcs | length }})</a>
         <a class="nav-item nav-link" id="nav-taxonomies-tab" data-toggle="tab" href="#nav-taxonomies" role="tab" aria-controls="nav-taxonomies" aria-selected="false">Taxonomies ({{ taxonomies | length }})</a>
         <a class="nav-item nav-link" id="nav-lineages-tab" data-toggle="tab" href="#nav-lineages" role="tab" aria-controls="nav-lineages" aria-selected="false">Lineages ({{ lineages | length }})</a>
-        <a class="nav-item nav-link" id="nav-pathways-tab" data-toggle="tab" href="#nav-pathways" role="tab" aria-controls="nav-pathways" aria-selected="false">Pathways ({{ pathways | length }})</a>
+        <a class="nav-item nav-link" id="nav-pathways-tab" data-toggle="tab" href="#nav-pathways" role="tab" aria-controls="nav-pathways" aria-selected="false">Pathways ({{ pathway_by_lineage | length }})</a>
+        <a class="nav-item nav-link" id="nav-faprotax-tab" data-toggle="tab" href="#nav-faprotax" role="tab" aria-controls="nav-faprotax" aria-selected="false">Faprotax ({{ faprotax_by_lineage | length }})</a>
+        <a class="nav-item nav-link" id="nav-matching-point-tab" data-toggle="tab" href="#nav-matching-point" role="tab" aria-controls="nav-matching-point" aria-selected="false">Matching Point ({{ matching_point_by_lineage | length }})</a>
       </div>
     </nav>
     <div class="tab-content" id="nav-tabContent">
@@ -38,8 +40,18 @@
           {% endfor %}
       </div>
       <div class="tab-pane fade" id="nav-pathways" role="tabpanel" aria-labelledby="nav-pathways-tab">
-          {% for pathway in pathways %}
-              <li>{{ pathway }}</li>
+          {% for lineage, pathway in pathway_by_lineage.items() %}
+              <li>{{ lineage }} : {{ pathway }}</li>
+          {% endfor %}
+      </div>
+      <div class="tab-pane fade" id="nav-faprotax" role="tabpanel" aria-labelledby="nav-faprotax-tab">
+          {% for lineage, faprotax in faprotax_by_lineage.items() %}
+              <li>{{ lineage }} : {{ faprotax }}</li>
+          {% endfor %}
+      </div>
+      <div class="tab-pane fade" id="nav-matching-point" role="tabpanel" aria-labelledby="nav-matching-point-tab">
+          {% for lineage, matching_point in matching_point_by_lineage.items() %}
+              <li>{{ lineage }} : {{ matching_point }}</li>
           {% endfor %}
       </div>
     </div>
