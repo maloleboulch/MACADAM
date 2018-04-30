@@ -38,7 +38,7 @@ def search():
         res = database.find_pathways_for_taxonomy(lineage, min_score, max_score, all_funcs)
         pathway_by_lineage[lineage] = res[0] or ["None"]
         faprotax_by_lineage[lineage] = res[1] or ["None"]
-        matching_point_by_lineage[lineage] = res[2]
+        matching_point_by_lineage[lineage] = res[2] or ["None"]
 
     return render_template('search.html', taxs=taxs, funcs=funcs, cpds=cpds, rxns=rxns, enzs=enzs, taxonomy_ranks=taxonomy_ranks, min_score=min_score, max_score=max_score,
                            all_funcs=all_funcs, lineages=lineages, taxonomies=taxonomies, pathway_by_lineage=pathway_by_lineage, faprotax_by_lineage=faprotax_by_lineage,
