@@ -18,8 +18,8 @@ def search():
     rxns = request.args.getlist("rxn")
     enzs = request.args.getlist("enz")
     taxonomy_ranks = request.args.getlist("taxonomyRank")
-    min_score = request.args.get("minScore")
-    max_score = request.args.get("maxScore")
+    min_score = request.args.get("minScore") or 0.0
+    max_score = request.args.get("maxScore") or 1.0
 
     cpds_pathways = database.find_cpds_pathways(cpds)
     rxns_pathways = database.find_rxns_pathways(rxns)
