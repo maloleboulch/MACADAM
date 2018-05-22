@@ -4,9 +4,7 @@ EXPOSE 5000
 
 WORKDIR app
 
-COPY ./ /app/
+COPY ./requirements.txt /app/requirements.txt
 
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
-
-CMD sleep 150000

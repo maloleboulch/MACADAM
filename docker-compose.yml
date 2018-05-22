@@ -3,4 +3,9 @@ services:
   web:
     build: .
     ports: ['5000:5000']
-    volumes: ['./:/application']
+    volumes: ['./:/app']
+    environment:
+      FLASK_APP: app.py
+      FLASK_ENV: development
+      FLASK_DEBUG: 1
+    command: flask run --host=0.0.0.0
